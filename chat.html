@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mental Health - AI Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/public/styles/chat.css">
+</head>
+<body>
+
+  <!-- ===== HEADER SECTION ===== -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div style="display: none; width: 32px; height: 32px; background: linear-gradient(135deg, #4CAF50, #66BB6A); border-radius: 50%; color: white; font-size: 16px; display: flex; align-items: center; justify-content: center;">🌿</div>
+        <span>Mental Health</span>
+      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="Home.html" class="nav-link">Home</a></li>
+          <li><a href="chat.html" class="nav-link active">AI Chat</a></li>
+          <li><a href="community.html" class="nav-link">Peer Support</a></li>
+          <li><a href="Booking.html" class="nav-link active">Booking</a></li>
+          <li><a href="assessment.html" class="nav-link">Assessment</a></li>
+        </ul>
+      </nav>
+      <button class="login-btn">Login</button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main">
+    <div class="container">
+      <section class="ai-chat-section">
+        <h1>AI Chat Support</h1>
+        <p>Talk anytime. We’re here to listen and help you feel better.</p>
+
+        <div class="chat-box">
+          <div class="chat-messages" id="chat-messages">
+            <div class="message ai">
+              Hi there 👋 I'm here to support you. How are you feeling today?
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+            <button class="send-btn" id="send-btn">Send</button>
+          </div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #718096; margin-top: 1rem;">
+          <em>Note: This is connected to an AI backend when configured.</em>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER SECTION ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Mental Health. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===== CHATBOT SCRIPT ===== -->
+  <script>
+    const messagesContainer = document.getElementById("chat-messages");
+    const input = document.getElementById("chat-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    async function sendMessage() {
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      // Show user message
+      appendMessage(userText, "user");
+      input.value = "";
+
+      // Call AI API (replace with your backend endpoint)
+      appendMessage("Thinking...", "ai"); 
+      try {
+        const response =  await fetch("http://localhost:5000/api/chat", { // your backend endpoint
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText })
+        });
+        const data = await response.json();
+        
+        // Remove "Thinking..." and add actual reply
+        messagesContainer.lastChild.remove();
+        appendMessage(data.reply || "Sorry, I couldn’t process that.", "ai");
+      } catch (err) {
+        messagesContainer.lastChild.remove();
+        appendMessage("⚠️ Error connecting to AI service.", "ai");
+      }
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.textContent = text;
+      messagesContainer.appendChild(msg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+
+</body>
+</html>

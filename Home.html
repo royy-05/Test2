@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health</title>
+    <link rel="stylesheet" href="/frontend/public/styles/home.css">
+</head>
+<body>
+    <!-- ===== HEADER SECTION ===== -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div style="display: none; width: 32px; height: 32px; background: linear-gradient(135deg, #4CAF50, #66BB6A); border-radius: 50%; color: white; font-size: 16px; display: flex; align-items: center; justify-content: center;">🌿</div>
+                <span>Mental Health</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="" class="nav-link">Home</a></li>
+                    <li><a href="assessment.html" class="nav-link">Assessment</a></li>
+                    <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="chat.html" class="nav-link">AI Chat</a></li>
+                    <li><a href="community.html" class="nav-link">Peer Support</a></li>
+                </ul>
+            </nav>
+            
+            <!-- User Info Section (shown when logged in) -->
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span class="welcome-text">Welcome, <span id="userName">Guest</span>!</span>
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+            
+            <!-- Login Button (shown when not logged in) -->
+            <button class="login-btn" id="loginBtn">Login</button>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to <span>MentalHealth</span></h1>
+                <p>Find resources and information to support your mental well-being and connect with a caring community</p>
+                <button class="get-started-btn">Get started</button>
+            </div>
+            <div class="hero-image">
+                <img src="" alt="Woman illustration" style="display: none;">
+                <!-- CSS Woman Illustration -->
+                <div class="woman-illustration">
+                    <div class="woman-head">
+                        <div class="woman-hair"></div>
+                        <div class="woman-face">
+                            <div class="woman-eyes">
+                                <div class="woman-eye"></div>
+                                <div class="woman-eye"></div>
+                            </div>
+                            <div class="woman-smile"></div>
+                        </div>
+                    </div>
+                    <div class="woman-arms">
+                        <div class="woman-arm left"></div>
+                        <div class="woman-arm right"></div>
+                    </div>
+                    <div class="woman-body"></div>
+                </div>
+                <!-- Background decorative elements -->
+                <div class="bg-circle bg-circle-1"></div>
+                <div class="bg-circle bg-circle-2"></div>
+                <div class="bg-circle bg-circle-3"></div>
+            </div>
+        </div>
+        <div class="wave-pattern"></div>
+    </section>
+
+    <!-- ===== FOOTER SECTION ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Mental Health. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in and display their name
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏠 Home page loaded');
+            
+            const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            const userDataStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+            
+            const userInfo = document.getElementById('userInfo');
+            const loginBtn = document.getElementById('loginBtn');
+            const userNameElement = document.getElementById('userName');
+            
+            if (token && userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    console.log('👤 User data found:', userData);
+                    
+                    // Show user info and hide login button
+                    userInfo.style.display = 'flex';
+                    loginBtn.style.display = 'none';
+                    
+                    // Display user's name (use name, firstName, email, or fallback to "User")
+                    const displayName = userData.name || userData.firstName || userData.username || userData.email?.split('@')[0] || 'User';
+                    userNameElement.textContent = displayName;
+                    
+                    console.log('✅ Displaying welcome message for:', displayName);
+                    
+                } catch (error) {
+                    console.error('❌ Error parsing user data:', error);
+                    // Show login button if user data is corrupted
+                    userInfo.style.display = 'none';
+                    loginBtn.style.display = 'block';
+                }
+            } else {
+                // No token or user data, show login button
+                console.log('🚪 No user session found, showing login button');
+                userInfo.style.display = 'none';
+                loginBtn.style.display = 'block';
+            }
+        });
+        
+        // Handle logout
+        function handleLogout() {
+            console.log('🚪 Logging out...');
+            
+            // Clear all stored data
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('user');
+            
+            console.log('🧹 User data cleared');
+            
+            // Show success message briefly then redirect
+            alert('You have been logged out successfully!');
+            
+            // Redirect to login page
+            setTimeout(() => {
+                window.location.href = '/frontend/public/login.html';
+            }, 500);
+        }
+        
+        // Handle login button click
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            console.log('🔄 Redirecting to login page...');
+            window.location.href = '/frontend/public/login.html';
+        });
+
+        // Handle get started button
+        document.querySelector('.get-started-btn').addEventListener('click', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            
+            if (token) {
+                // User is logged in, redirect to assessment
+                window.location.href = '/frontend/public/assessment.html';
+            } else {
+                // User not logged in, redirect to login first
+                window.location.href = '/frontend/public/login.html';
+            }
+        });
+    </script>
+</body>
+</html>
