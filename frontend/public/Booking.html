@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mental Health - Booking</title>
+  <link rel="stylesheet" href="/frontend/public/styles/booking.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">🌿</div>
+        <span>Mental Health</span>
+      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="Home.html" class="nav-link">Home</a></li>
+          <li><a href="assessment.html" class="nav-link">Assessment</a></li>
+          <li><a href="#" class="nav-link active">Booking</a></li>
+          <li><a href="chat.html" class="nav-link">AI Chat</a></li>
+          <li><a href="peersupport.html" class="nav-link">Peer Support</a></li>
+        </ul>
+      </nav>
+      <button class="login-btn">Login</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="page-header">
+        <h1>Booking</h1>
+        <p>Securely book your appointment</p>
+      </div>
+
+      <div class="booking-container">
+        <!-- LEFT SIDE: CALENDAR -->
+        <div class="calendar-section">
+          <div class="calendar-nav">
+            <button class="calendar-btn" onclick="previousMonth()">‹</button>
+            <div class="current-month" id="currentMonth">July 2024</div>
+            <button class="calendar-btn" onclick="nextMonth()">›</button>
+          </div>
+          <div class="calendar-grid" id="calendarGrid">
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+            <div class="calendar-day-header">Sun</div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE: THERAPIST + TIME SLOTS -->
+        <div class="booking-options">
+          <label for="therapistSelect" class="section-title">Select a therapist</label>
+          <select id="therapistSelect" class="therapist-dropdown">
+            <option>All Therapists</option>
+            <option>Dr. Something some</option>
+            <option>Dr. Nothing non</option>
+            <option>Dr. Couldbe coul</option>
+            <option>Dr. parking pa</option>
+          </select>
+
+          <div class="time-slots">
+            <div class="time-slot" onclick="selectTimeSlot(this)">
+              <span class="time-slot-time">10:00 AM</span>
+              <span class="time-slot-type">ONLINE</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this)">
+              <span class="time-slot-time">12:30 PM</span>
+              <span class="time-slot-type">OFFLINE</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this)">
+              <span class="time-slot-time">03:30 PM</span>
+              <span class="time-slot-type">ONLINE</span>
+            </div>
+          </div>
+
+          <button class="book-appointment-btn" id="bookBtn" onclick="bookAppointment()" disabled>
+            Book Appointment
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Mental Health. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    let selectedDate = null;
+    let selectedTime = null;
+    let currentMonth = 6; // July (0-based)
+    let currentYear = 2024;
+
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    function generateCalendar() {
+      const calendarGrid = document.getElementById('calendarGrid');
+      // Clear existing days (keep headers)
+      const headers = calendarGrid.querySelectorAll('.calendar-day-header');
+      calendarGrid.innerHTML = '';
+      headers.forEach(header => calendarGrid.appendChild(header));
+
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+      const daysInMonth = lastDayOfMonth.getDate();
+      const startingDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7; // Convert Sunday=0 to Monday=0
+
+      document.getElementById('currentMonth').textContent = `${months[currentMonth]} ${currentYear}`;
+
+      // Add days from previous month
+      const prevMonth = new Date(currentYear, currentMonth, 0);
+      const daysInPrevMonth = prevMonth.getDate();
+      for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+        const dayEl = document.createElement('div');
+        dayEl.textContent = daysInPrevMonth - i;
+        dayEl.classList.add('calendar-day', 'other-month');
+        calendarGrid.appendChild(dayEl);
+      }
+
+      // Add days of current month
+      const today = new Date();
+      const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+      const todayDate = today.getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayEl = document.createElement('div');
+        dayEl.textContent = day;
+        dayEl.classList.add('calendar-day');
+
+        // Highlight today's date if we're viewing the current month
+        if (isCurrentMonth && day === todayDate) {
+          dayEl.classList.add('today');
+        } else {
+          dayEl.classList.add('available');
+          dayEl.addEventListener('click', function() {
+            selectDate(day, this);
+          });
+        }
+
+        calendarGrid.appendChild(dayEl);
+      }
+
+      // Add days from next month to fill the grid
+      const remainingCells = 42 - (startingDayOfWeek + daysInMonth); // 6 rows * 7 days = 42
+      for (let day = 1; day <= remainingCells; day++) {
+        const dayEl = document.createElement('div');
+        dayEl.textContent = day;
+        dayEl.classList.add('calendar-day', 'other-month');
+        calendarGrid.appendChild(dayEl);
+      }
+    }
+
+    function selectDate(day, dayElement) {
+      // Clear previous selected date
+      document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+      dayElement.classList.add('selected');
+      selectedDate = `${months[currentMonth]} ${day}, ${currentYear}`;
+      updateBookButton();
+    }
+
+    function selectTimeSlot(slotEl) {
+      // Clear previous selected time slot
+      document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
+      slotEl.classList.add('selected');
+      selectedTime = slotEl.querySelector('.time-slot-time').textContent;
+      updateBookButton();
+    }
+
+    function updateBookButton() {
+      const btn = document.getElementById('bookBtn');
+      if (selectedDate && selectedTime) {
+        btn.disabled = false;
+      } else {
+        btn.disabled = true;
+      }
+    }
+
+    function previousMonth() {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      resetSelection();
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      resetSelection();
+      generateCalendar();
+    }
+
+    function resetSelection() {
+      selectedDate = null;
+      selectedTime = null;
+      document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+      document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
+      updateBookButton();
+    }
+
+    async function bookAppointment() {
+  if (selectedDate && selectedTime) {
+    const therapist = document.getElementById("therapistSelect").value;
+
+    const bookingData = {
+      userId: "12345",
+      therapist: therapist,
+      date: selectedDate,
+      time: selectedTime,
+      type: document.querySelector(".time-slot.selected .time-slot-type").textContent
+    };
+
+    try {
+      // ✅ FIX: Add the full backend URL
+      const response = await fetch("http://localhost:5000/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData)
+      });
+
+      // ✅ FIX: Check if response is ok before parsing JSON
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      alert(`✅ Appointment booked!\nDate: ${selectedDate}\nTime: ${selectedTime}`);
+      resetSelection();
+    } catch (error) {
+      console.error("Booking error:", error);
+      alert("❌ Failed to book appointment: " + error.message);
+    }
+  }
+}
+
+    // Initialize calendar on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      generateCalendar();
+    });
+  </script>
+</body>
+</html>

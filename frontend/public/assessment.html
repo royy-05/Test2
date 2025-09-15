@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mental Health - Assessment</title>
+  <link rel="stylesheet" href="/frontend/public/styles/assessment.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">🌿</div>
+        <span>Mental Health</span>
+      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="Home.html" class="nav-link">Home</a></li>
+          <li><a href="chat.html" class="nav-link active">AI Chat</a></li>
+          <li><a href="community.html" class="nav-link">Peer Support</a></li>
+          <li><a href="Booking.html" class="nav-link active">Booking</a></li>
+          <li><a href="assessment.html" class="nav-link">Assessment</a></li>
+        </ul>
+      </nav>
+      <button class="signup-btn">Sign Up</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Background decorations -->
+    <div class="bg-decoration bg-leaf-1"></div>
+    <div class="bg-decoration bg-leaf-2"></div>
+
+    <div class="assessment-container">
+      <div class="page-header">
+        <h1>Your Wellness Assessment</h1>
+        <p>Answer a few questions to get personalized insights.</p>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-text" id="progressText">1/9</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">Depression Screening (PHQ-9)</div>
+      </div>
+
+      <div class="question-card">
+        <div class="character-illustration">😊</div>
+        
+        <div class="question-number" id="questionNumber">1. Over the last 2 weeks, how often have you been bothered by little interest or pleasure in doing things?</div>
+        
+        <div class="rating-options" id="ratingOptions">
+          <div class="rating-option" onclick="selectRating(this, 0)">
+            <div class="rating-circle">
+              <div class="inner-circle"></div>
+            </div>
+            <div class="rating-label">Not at all</div>
+          </div>
+          <div class="rating-option" onclick="selectRating(this, 1)">
+            <div class="rating-circle">
+              <div class="inner-circle"></div>
+            </div>
+            <div class="rating-label">Several days</div>
+          </div>
+          <div class="rating-option" onclick="selectRating(this, 2)">
+            <div class="rating-circle">
+              <div class="inner-circle"></div>
+            </div>
+            <div class="rating-label">More than half the days</div>
+          </div>
+          <div class="rating-option" onclick="selectRating(this, 3)">
+            <div class="rating-circle">
+              <div class="inner-circle"></div>
+            </div>
+            <div class="rating-label">Nearly every day</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation-buttons">
+        <button class="nav-btn back-btn" id="backBtn" onclick="previousQuestion()" disabled>Back</button>
+        <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+      </div>
+    </div>
+
+    <!-- Results Modal (Hidden by default) -->
+    <div id="resultsModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="resultsTitle">Assessment Results</h2>
+        </div>
+        <div class="modal-body" id="resultsContent">
+          <!-- Results will be populated here -->
+        </div>
+        <div class="modal-footer">
+          <button class="nav-btn next-btn" onclick="closeResults()">Take Another Assessment</button>
+          <button class="nav-btn back-btn" onclick="goToResources()">View Resources</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/frontend/public/scripts/assessments.js"></script>
+</body>
+</html>

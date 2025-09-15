@@ -1,0 +1,183 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    header {
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #14532d;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #374151;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .signup-btn {
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Login Card */
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #14532d;
+      margin-bottom: 1.5rem;
+    }
+
+    .card input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #d1fae5;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .card input:focus {
+      border-color: #6ee7b7;
+      box-shadow: 0 0 0 2px #bbf7d0;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      color: #374151;
+    }
+
+    .options a {
+      color: #15803d;
+      text-decoration: none;
+    }
+
+    .options a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .login-btn:hover {
+      background: #15803d;
+    }
+
+    .signup-text {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .signup-text a {
+      color: #15803d;
+      text-decoration: none;
+    }
+
+    .signup-text a:hover {
+      text-decoration: underline;
+    }
+    /* Additional styles for error/success messages */
+    .error-message {
+      display: none;
+      color: #e74c3c;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #e74c3c;
+      border-radius: 4px;
+      background-color: #fdf2f2;
+      font-size: 14px;
+    }
+
+    .success-message {
+      display: none;
+      color: #27ae60;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #27ae60;
+      border-radius: 4px;
+      background-color: #f2fdf2;
+      font-size: 14px;
+    }
+
+    .login-btn:disabled {
+      background-color: #bdc3c7;
+      cursor: not-allowed;
+    }
+
+    input:invalid {
+      border-color: #e74c3c;
+    }
+    .admin-badge {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}

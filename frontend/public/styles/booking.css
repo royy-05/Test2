@@ -1,0 +1,409 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8faf9;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== HEADER STYLES ===== */
+    .header {
+      background-color: white;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 0;
+    }
+
+    .header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #4CAF50, #66BB6A);
+      border-radius: 50%;
+      color: white;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #4CAF50;
+      transform: translateY(-1px);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 50%;
+      background-color: #4CAF50;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #4CAF50, #66BB6A);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.8rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      padding: 3rem 0 6rem;
+      background: linear-gradient(135deg, #f8faf9 0%, #e8f5e8 100%);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.25rem;
+      color: #4a5568;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== BOOKING SECTION ===== */
+    .booking-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ===== CALENDAR STYLES ===== */
+    .calendar-section {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      color: #4a5568;
+    }
+
+    .calendar-btn:hover {
+      background: #4CAF50;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .current-month {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day-header {
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+      min-height: 40px;
+    }
+
+    .calendar-day:hover {
+      background: #f1f5f9;
+    }
+
+    .calendar-day.available {
+      background: rgba(76, 175, 80, 0.1);
+      color: #2f855a;
+    }
+
+    .calendar-day.available:hover {
+      background: rgba(76, 175, 80, 0.2);
+    }
+
+    .calendar-day.selected {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .calendar-day.today {
+      background: #4CAF50;
+      color: white;
+      font-weight: 600;
+    }
+
+    .calendar-day.unavailable {
+      color: #cbd5e0;
+      cursor: not-allowed;
+    }
+
+    .calendar-day.other-month {
+      color: #cbd5e0;
+    }
+
+    /* ===== BOOKING OPTIONS ===== */
+    .booking-options {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .therapist-dropdown {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .therapist-dropdown:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    .time-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .time-slot {
+      background: #f8faf9;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .time-slot:hover {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.05);
+    }
+
+    .time-slot.selected {
+      background: #4CAF50;
+      border-color: #4CAF50;
+      color: white;
+    }
+
+    .time-slot-time {
+      font-weight: 600;
+    }
+
+    .time-slot-type {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(76, 175, 80, 0.1);
+      color: #2f855a;
+    }
+
+    .time-slot.selected .time-slot-type {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* ===== BOOKING BUTTON ===== */
+    .book-appointment-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4CAF50, #66BB6A);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      margin-top: 2rem;
+    }
+
+    .book-appointment-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    .book-appointment-btn:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ===== FOOTER STYLES ===== */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: white;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .footer p {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE Design ===== */
+    @media (max-width: 1024px) {
+      .booking-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header .container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-list {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .main-content {
+        padding: 2rem 0 4rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .calendar-section,
+      .booking-options {
+        padding: 1.5rem;
+      }
+    }
